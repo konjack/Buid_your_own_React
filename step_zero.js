@@ -62,7 +62,7 @@ const container = document.getElementById("root");
 // オブジェクトのプロパティにアクセスするのに角括弧を使用すると動的にプロパティを追加できる。
 // ドットによる記法だと動的にはプロパティを追加することはできない。
 const node = document.createElement(element.type);
-console.log(node);
+console.log("createElement", node);
 // nodeの属性にはnode.<属性値>で取得できる。
 node["title"] = element.props.title;
 
@@ -71,10 +71,13 @@ node["title"] = element.props.title;
     createTextNode：新しいTextノードを生成する。HTML文字をエスケープできる。
  */
 const text = document.createTextNode("");
-console.log(text);
+console.log("createTextNode", text);
 // nodeValueはNodeインターフェースのプロパティで、現在のノードの値を返したり設定できたりする。
-text["nodeValue"] = element.props.children;
-
+// innerHTMLだと動かないけどここら辺の理解が甘いからかもしれない。
+// https://kuroeveryday.blogspot.com/2018/11/difference-between-dom-and-node-and-element.html
+// text["nodeValue"] = element.props.children;
+text.innerHTML = element.props.children;
+console.log("text", text);
 node.appendChild(text);
 container.appendChild(node);
 
